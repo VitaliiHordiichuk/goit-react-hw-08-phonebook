@@ -4,7 +4,6 @@ import ContactList from '../ContactList/ContactList'
 import Filter from '../Filter/Filter'
 import { nanoid } from 'nanoid';
 import { Title, Div } from './App.styled'
-import PropTypes from 'prop-types';
 
 
 
@@ -15,7 +14,7 @@ class App extends React.Component{
   }
 
   formSubmit = data => {
-    const { name, number } = data;
+    const { name } = data;
  const isExist = this.state.contacts.find(contact =>
         contact.name.toLowerCase() === name.toLowerCase()
     );
