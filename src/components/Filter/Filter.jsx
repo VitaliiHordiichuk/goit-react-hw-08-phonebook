@@ -1,11 +1,12 @@
-import { useSelector, useDispatch } from 'react-redux/es/exports';
-import { setFilter } from '../../redux/contactsSlice';
-import { getFilter } from '../../redux/selectors';
+// import { useSelector, useDispatch } from 'react-redux/es/exports';
+import PropTypes from 'prop-types';
+// import { setFilter } from '../../redux/contactsSlice';
+// import { getFilter } from '../../redux/selectors';
 import { Label, Input } from './Filter.styled';
 
-const Filter = () => {
-  const dispatch = useDispatch();
-  const filter = useSelector(getFilter);
+const Filter = ({ filter, handleChange }) => {
+  // const dispatch = useDispatch();
+  // const filter = useSelector(getFilter);
   return (
     <Label>
       {' '}
@@ -13,10 +14,13 @@ const Filter = () => {
       <Input
         type="text"
         value={filter}
-        onChange={evt => dispatch(setFilter(evt.target.value))}
+        onChange={evt => handleChange(evt.target.value)}
       />
     </Label>
   );
 };
-
+Filter.propTypes = {
+  filter: PropTypes.string.isRequired,
+  handleChange: PropTypes.func.isRequired,
+};
 export default Filter;
