@@ -29,11 +29,12 @@ const ContactForm = () => {
   };
 
   const fieldsData = [
-    { name: 'name', label: 'Name', type: 'name' },
+    { name: 'name', label: 'Name', type: 'name', placeholder: 'Name' },
     {
       name: 'number',
-      label: 'Number',
+      label: 'Phone number',
       type: 'tel',
+      placeholder: 'Phone number',
     },
   ];
 
@@ -51,7 +52,7 @@ const ContactForm = () => {
         <Formik initialValues={initialValues} onSubmit={handleSubmitForm}>
           {({ values, handleChange, handleBlur }) => (
             <Form>
-              {fieldsData.map(({ name, label, type }) => (
+              {fieldsData.map(({ name, label, type, placeholder }) => (
                 <div key={name}>
                   <FormLabel
                     fontWeight="300"
@@ -69,7 +70,7 @@ const ContactForm = () => {
                     id={name}
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    placeholder={label}
+                    placeholder={placeholder}
                     value={values[name] || ''}
                   />
                 </div>

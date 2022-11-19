@@ -33,7 +33,7 @@ const ContactList = ({ getFilteredContacts }) => {
             <Thead>
               <Tr>
                 <Th>Name</Th>
-                <Th>Number</Th>
+                <Th>Phone number</Th>
                 <Th></Th>
               </Tr>
             </Thead>
