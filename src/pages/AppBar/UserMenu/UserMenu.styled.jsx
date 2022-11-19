@@ -16,6 +16,11 @@ export const NavItem = styled(NavLink)`
     text-decoration: underline;
   }
 `;
+export const Mail = styled.p`
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
+`;
 
 export const List = styled.li`
   list-style-type: none;

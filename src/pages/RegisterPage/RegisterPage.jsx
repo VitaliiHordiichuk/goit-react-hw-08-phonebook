@@ -1,9 +1,22 @@
 import { register } from '../../redux/auth/auth-operations';
 import { useDispatch } from 'react-redux';
-import { Box, Button, Flex, FormLabel, Input } from '@chakra-ui/react';
+import { useState } from 'react';
+import swal from 'sweetalert';
+import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
+import {
+  Box,
+  Button,
+  Flex,
+  FormLabel,
+  Input,
+  InputGroup,
+  InputRightElement,
+} from '@chakra-ui/react';
 import { Formik, Form, Field } from 'formik';
 
 const RegisterPage = () => {
+  const [show, setShow] = useState(false);
+  const handleShow = () => setShow(!show);
   const dispatch = useDispatch();
 
   const initialValues = {
@@ -14,15 +27,18 @@ const RegisterPage = () => {
 
   const handleSubmitForm = (values, { setSubmitting, resetForm }) => {
     setSubmitting(true);
-    dispatch(register(values));
+    values.name.length <= 0 ||
+    values.email.length <= 0 ||
+    values.password.length <= 0
+      ? swal('Please enter name, email and password')
+      : dispatch(register(values));
     resetForm();
     setSubmitting(false);
   };
 
   const fieldsData = [
     { name: 'name', label: 'Name', type: 'text' },
-    { name: 'email', label: 'Email', type: 'text' },
-    { name: 'password', label: 'Password', type: 'password' },
+    { name: 'email', label: 'Email', type: 'email' },
   ];
 
   return (
@@ -33,7 +49,15 @@ const RegisterPage = () => {
             <Form>
               {fieldsData.map(({ name, label, type }) => (
                 <div key={name}>
-                  <FormLabel htmlFor="">{label}</FormLabel>
+                  <FormLabel
+                    fontWeight="300"
+                    fontSize="15px"
+                    mb="0px"
+                    mt="15px"
+                    htmlFor=""
+                  >
+                    {label}
+                  </FormLabel>
                   <Field
                     as={Input}
                     variant="filled"
@@ -46,7 +70,34 @@ const RegisterPage = () => {
                     value={values[name] || ''}
                   />
                 </div>
-              ))}
+              ))}{' '}
+              <FormLabel
+                fontWeight="300"
+                fontSize="15px"
+                mb="0px"
+                mt="15px"
+                htmlFor=""
+              >
+                Password
+              </FormLabel>
+              <InputGroup>
+                <Field
+                  as={Input}
+                  variant="filled"
+                  name="password"
+                  type={show ? 'text' : 'password'}
+                  id="Password"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  placeholder="Password"
+                  value={values.password || ''}
+                />
+                <InputRightElement width="4.5rem">
+                  <Button h="1.75rem" size="sm" onClick={handleShow}>
+                    {show ? <ViewIcon /> : <ViewOffIcon />}
+                  </Button>
+                </InputRightElement>
+              </InputGroup>
               <Button type="submit" colorScheme="purple" width="full" mt="30px">
                 Submit
               </Button>

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import swal from 'sweetalert';
 
 axios.defaults.baseURL = 'https://connections-api.herokuapp.com';
 
@@ -17,9 +18,10 @@ export const register = createAsyncThunk('auth/register', async credentials => {
   try {
     const { data } = await axios.post('/users/signup', credentials);
     token.set(data.token);
+    swal('Good job!', 'You clicked the button!', 'success');
     return data;
   } catch (error) {
-    console.log(error);
+    swal('Your password must be at least 7 characters.');
   }
 });
 

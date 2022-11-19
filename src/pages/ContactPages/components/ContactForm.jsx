@@ -1,5 +1,7 @@
 import { addContact } from '../../../redux/contacts/contactsApi';
 import { Formik, Form, Field } from 'formik';
+import swal from 'sweetalert';
+
 import { selectAllContacts } from '../../../redux/contacts/contactsSelectors';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, Button, Flex, FormLabel, Input, Text } from '@chakra-ui/react';
@@ -15,18 +17,24 @@ const ContactForm = () => {
 
   const handleSubmitForm = (values, { setSubmitting, resetForm }) => {
     setSubmitting(true);
-    allContacts.some(
-      item => item.name.toLowerCase() === values.name.toLowerCase()
-    )
-      ? alert(`${values.name} is already in contacts`)
+    !values.name || !values.number
+      ? swal('Please enter name and number')
+      : allContacts?.some(
+          item => item.name.toLowerCase() === values.name.toLowerCase()
+        )
+      ? swal('This contact is already in contacts')
       : dispatch(addContact(values));
     resetForm();
     setSubmitting(false);
   };
 
   const fieldsData = [
-    { name: 'name', label: 'Name' },
-    { name: 'number', label: 'Number' },
+    { name: 'name', label: 'Name', type: 'name' },
+    {
+      name: 'number',
+      label: 'Number',
+      type: 'tel',
+    },
   ];
 
   return (
@@ -43,7 +51,7 @@ const ContactForm = () => {
         <Formik initialValues={initialValues} onSubmit={handleSubmitForm}>
           {({ values, handleChange, handleBlur }) => (
             <Form>
-              {fieldsData.map(({ name, label }) => (
+              {fieldsData.map(({ name, label, type }) => (
                 <div key={name}>
                   <FormLabel
                     fontWeight="300"
@@ -57,7 +65,7 @@ const ContactForm = () => {
                     as={Input}
                     variant="filled"
                     name={name}
-                    type="text"
+                    type={type}
                     id={name}
                     onBlur={handleBlur}
                     onChange={handleChange}

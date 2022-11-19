@@ -1,4 +1,4 @@
-import { SearchBar, NavItem, List } from './UserMenu.styled';
+import { SearchBar, NavItem, List, Mail } from './UserMenu.styled';
 import { useSelector, useDispatch } from 'react-redux';
 import { getUserMail } from '../../../redux/auth/auth-selectors';
 import { logOut } from '../../../redux/auth/auth-operations';
@@ -10,7 +10,7 @@ const UserMenu = () => {
   return (
     <SearchBar>
       <List>
-        <p>{name}</p>
+        <Mail>{name}</Mail>
       </List>
       <List>
         <NavItem to="" onClick={() => dispatch(logOut())}>

@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, Button, Flex } from '@chakra-ui/react';
+import { SmallCloseIcon } from '@chakra-ui/icons';
 import { getUserName } from '../../../redux/auth/auth-selectors';
 import { deleteContact } from '../../../redux/contacts/contactsApi';
 import {
@@ -15,14 +16,16 @@ import {
 
 const ContactList = ({ getFilteredContacts }) => {
   const dispatch = useDispatch();
-  const handleDelete = id => dispatch(deleteContact(id));
+  const handleDelete = id => {
+    dispatch(deleteContact(id));
+  };
   const name = useSelector(getUserName);
 
   return (
     <Flex align="center" justify="center">
       <Box p={6}>
         <TableContainer>
-          <Table variant="simple">
+          <Table variant="striped" colorScheme="purple" size="sm">
             <TableCaption>
               Personal phonebook&nbsp;
               {name}
@@ -43,9 +46,10 @@ const ContactList = ({ getFilteredContacts }) => {
                     <Button
                       h="20px"
                       type="button"
+                      bg="transparent"
                       onClick={() => handleDelete(id)}
                     >
-                      Delete
+                      <SmallCloseIcon />
                     </Button>
                   </Td>
                 </Tr>
